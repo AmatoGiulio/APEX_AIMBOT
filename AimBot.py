@@ -60,6 +60,7 @@ class AimBot:
         self.detect_center_x, self.detect_center_y = self.detect_length//2, self.detect_length//2
 
     def build_trt_model(self, onnx_path, engine_path):
+        print('build')
         if not os.path.exists(engine_path):
             print('---------------------模型制作中，第一次等待时间较长(大约 15 mins), 完成后会有文字提示---------------------')
             export_to_trt(onnx=onnx_path, engine=engine_path)
@@ -195,7 +196,7 @@ class AimBot:
         nums, boxes, confidences, classes = self.engine.inference(img)
         target_sort_list = self.sort_target(boxes, confidences, classes)
         self.lock_target(target_sort_list)
-        fps_track = 1/(time.time()-start_time)
+        fps_track =((time.time()-start_time)) and  1/(time.time()-start_time)
 
         if self.args.save_screenshot:
             self.q_save.put([img, self.locking, nums])
