@@ -291,42 +291,41 @@ def export_to_trt(onnx=None, engine=None):
     builder.create_engine(args.engine, args.precision, args.calib_input, args.calib_cache, args.calib_num_images,
                           args.calib_batch_size, args.encryp_password)
 
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("-o", "--onnx", help="The input ONNX model file to load")
-#     parser.add_argument("-e", "--engine", help="The output path for the TRT engine")
-#     parser.add_argument("-p", "--precision", default="fp16", choices=["fp32", "fp16", "int8"],
-#                         help="The precision mode to build in, either 'fp32', 'fp16' or 'int8', default: 'fp16'")
-#     parser.add_argument("-v", "--verbose", action="store_true", help="Enable more verbose log output")
-#     parser.add_argument("-w", "--workspace", default=1, type=int, help="The max memory workspace size to allow in Gb, "
-#                                                                        "default: 1")
-#     parser.add_argument("--calib_input", help="The directory holding images to use for calibration")
-#     parser.add_argument("--calib_cache", default="./calibration.cache",
-#                         help="The file path for INT8 calibration cache to use, default: ./calibration.cache")
-#     parser.add_argument("--calib_num_images", default=5000, type=int,
-#                         help="The maximum number of images to use for calibration, default: 5000")
-#     parser.add_argument("--calib_batch_size", default=8, type=int,
-#                         help="The batch size for the calibration process, default: 8")
-#     parser.add_argument("--end2end", default=False, action="store_true",
-#                         help="export the engine include nms plugin, default: False")
-#     parser.add_argument("--conf_thres", default=0.4, type=float,
-#                         help="The conf threshold for the nms, default: 0.4")
-#     parser.add_argument("--iou_thres", default=0.5, type=float,
-#                         help="The iou threshold for the nms, default: 0.5")
-#     parser.add_argument("--max_det", default=100, type=int,
-#                         help="The total num for results, default: 100")
-
-#     args = parser.parse_args()
-#     print(args)
-#     if not all([args.onnx, args.engine]):
-#         parser.print_help()
-#         log.error("These arguments are required: --onnx and --engine")
-#         sys.exit(1)
-#     if args.precision == "int8" and not (args.calib_input or os.path.exists(args.calib_cache)):
-#         parser.print_help()
-#         log.error("When building in int8 precision, --calib_input or an existing --calib_cache file is required")
-#         sys.exit(1)
-    
-#     export_to_trt(args)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--onnx", help="The input ONNX model file to load")
+    parser.add_argument("-e", "--engine", help="The output path for the TRT engine")
+    parser.add_argument("-p", "--precision", default="fp16", choices=["fp32", "fp16", "int8"],
+                        help="The precision mode to build in, either 'fp32', 'fp16' or 'int8', default: 'fp16'")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable more verbose log output")
+    parser.add_argument("-w", "--workspace", default=1, type=int, help="The max memory workspace size to allow in Gb, "
+                                                                       "default: 1")
+    parser.add_argument("--calib_input", help="The directory holding images to use for calibration")
+    parser.add_argument("--calib_cache", default="./calibration.cache",
+                        help="The file path for INT8 calibration cache to use, default: ./calibration.cache")
+    parser.add_argument("--calib_num_images", default=5000, type=int,
+                        help="The maximum number of images to use for calibration, default: 5000")
+    parser.add_argument("--calib_batch_size", default=8, type=int,
+                        help="The batch size for the calibration process, default: 8")
+    parser.add_argument("--end2end", default=False, action="store_true",
+                        help="export the engine include nms plugin, default: False")
+    parser.add_argument("--conf_thres", default=0.4, type=float,
+                        help="The conf threshold for the nms, default: 0.4")
+    parser.add_argument("--iou_thres", default=0.5, type=float,
+                        help="The iou threshold for the nms, default: 0.5")
+    parser.add_argument("--max_det", default=100, type=int,
+                        help="The total num for results, default: 100")
+    args = parser.parse_args()
+    print(args)
+    if not all([args.onnx, args.engine]):
+        parser.print_help()
+        log.error("These arguments are required: --onnx and --engine")
+        sys.exit(1)
+    if args.precision == "int8" and not (args.calib_input or os.path.exists(args.calib_cache)):
+        parser.print_help()
+        log.error("When building in int8 precision, --calib_input or an existing --calib_cache file is required")
+        sys.exit(1)
+  
+    export_to_trt(args)
 
 
